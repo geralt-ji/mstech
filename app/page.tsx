@@ -185,7 +185,6 @@ export default function Home() {
               为医院、药企提供R Shiny平台和智能分析解决方案
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-lg px-8 py-6">了解更多</Button>
               <Button
                 variant="outline"
                 className="border-white text-white hover:bg-white/10 text-lg px-8 py-6 bg-transparent"
@@ -261,19 +260,19 @@ export default function Home() {
 
               <div className="space-y-6 mb-8">
                 <div className="border-l-4 border-blue-600 pl-4">
-                  <h4 className="font-bold text-lg">杨明 博士 | 创始人 & 首席科学家</h4>
+                  <h4 className="font-bold text-lg">杨博士 | 创始人 & 首席科学家</h4>
                   <p className="text-sm text-gray-600">哈佛大学生物统计博士后 | 深圳市海外高层次人才</p>
                   <p className="text-sm text-gray-500 mt-1">专注医疗大数据15年+，主导药物临床试验统计咨询</p>
                 </div>
 
                 <div className="border-l-4 border-blue-600 pl-4">
-                  <h4 className="font-bold text-lg">伍海涛 博士 | AI技术顾问</h4>
+                  <h4 className="font-bold text-lg">伍博士 | AI技术顾问</h4>
                   <p className="text-sm text-gray-600">香港科技大学AI专家 | 金融科技实验室技术骨干</p>
                   <p className="text-sm text-gray-500 mt-1">AI自动研报系统、政策检索知识库（专利/软著10+项）</p>
                 </div>
 
                 <div className="border-l-4 border-blue-600 pl-4">
-                  <h4 className="font-bold text-lg">陈俊杰 硕士 | 数据项目经理</h4>
+                  <h4 className="font-bold text-lg">陈经理 硕士 | 数据项目经理</h4>
                   <p className="text-sm text-gray-600">香港浸会大学金融统计 | CDISC/SDTM认证专家</p>
                   <p className="text-sm text-gray-500 mt-1">成功交付哈佛医学院、清华大学临床数据平台</p>
                 </div>
@@ -285,45 +284,45 @@ export default function Home() {
                     <span className="text-blue-600 text-xl">15+</span>
                   </div>
                   <div>
-                    <p className="font-medium">行业经验</p>
-                    <p className="text-sm text-gray-500">年专业服务</p>
+                    <p className="font-medium">数据驱动的行业经验</p>
+                    <p className="text-sm text-gray-500">超过 15 年医疗与生物医药领域经验，熟悉行业痛点与合规要求</p>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                    <span className="text-blue-600 text-xl">2000+</span>
+                    <span className="text-blue-600 text-xl">50+</span>
                   </div>
                   <div>
-                    <p className="font-medium">医学文献</p>
-                    <p className="text-sm text-gray-500">知识库集成</p>
+                    <p className="font-medium">AI 技术探索与应用</p>
+                    <p className="text-sm text-gray-500">积极引入 NLP、知识图谱等 AI 技术，用于数据挖掘与智能化分析</p>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                    <span className="text-blue-600 text-xl">FDA</span>
+                    <span className="text-blue-600 text-xl">GxP</span>
                   </div>
                   <div>
-                    <p className="font-medium">合规认可</p>
-                    <p className="text-sm text-gray-500">R Consortium试点</p>
+                    <p className="font-medium">数据驱动的行业经验</p>
+                    <p className="text-sm text-gray-500">深谙 GxP、CDISC、HIPAA 等国际标准，确保数据处理安全与合规</p>
                   </div>
                 </div>
 
                 <div className="flex items-center">
                   <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                    <span className="text-blue-600 text-xl">10+</span>
+                    <span className="text-blue-600 text-xl">20+</span>
                   </div>
                   <div>
-                    <p className="font-medium">技术专利</p>
-                    <p className="text-sm text-gray-500">AI创新成果</p>
+                    <p className="font-medium">跨领域整合与定制化方案</p>
+                    <p className="text-sm text-gray-500">结合行业知识与新兴技术，为客户提供定制化数字化转型方案
+
+</p>
                   </div>
                 </div>
               </div>
 
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                了解更多 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+
             </motion.div>
           </div>
         </div>
@@ -375,9 +374,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-xl font-bold mb-4">{solution.title}</h3>
                 <p className="text-gray-600 mb-6">{solution.description}</p>
-                <Link href="#" className="text-blue-600 flex items-center font-medium group-hover:text-blue-700">
-                  了解详情 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+
               </motion.div>
             ))}
           </div>
@@ -436,17 +433,13 @@ export default function Home() {
                 <div className="p-6">
                   <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                   <p className="text-gray-600 mb-4">{item.description}</p>
-                  <Link href="#" className="text-blue-600 flex items-center font-medium">
-                    查看详情 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
+
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Button className="bg-blue-600 hover:bg-blue-700">查看更多案例</Button>
-          </div>
+
         </div>
       </section>
 
