@@ -6,11 +6,18 @@ import { ChevronRight, ArrowRight, Phone, Mail, MapPin, Menu, X } from "lucide-r
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
+import { toast } from "sonner"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +27,32 @@ export default function Home() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        toast.success('消息发送成功！我们会尽快与您联系。')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        toast.error('发送失败，请稍后再试。')
+      }
+    } catch (error) {
+      toast.error('发送失败，请稍后再试。')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   const solutions = [
     {
@@ -525,7 +558,7 @@ export default function Home() {
             >
               <h3 className="text-2xl font-bold mb-6">发送消息</h3>
 
-              <form className="grid gap-6">
+              <form className="grid gap-6" onSubmit={handleFormSubmit}>
                 <div className="grid gap-2">
                   <label htmlFor="name" className="text-sm font-medium">
                     姓名
@@ -535,6 +568,9 @@ export default function Home() {
                     id="name"
                     className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
                     placeholder="请输入您的姓名"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -547,6 +583,9 @@ export default function Home() {
                     id="email"
                     className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
                     placeholder="请输入您的邮箱"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
                   />
                 </div>
 
@@ -559,10 +598,18 @@ export default function Home() {
                     rows={4}
                     className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
                     placeholder="请输入您的留言"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    required
                   />
                 </div>
 
-                <Button className="bg-blue-600 hover:bg-blue-700 w-full">发送消息</Button>
+                <Button 
+                  className="bg-blue-600 hover:bg-blue-700 w-full" 
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? '发送中...' : '发送消息'}
+                </Button>
               </form>
             </motion.div>
           </div>
