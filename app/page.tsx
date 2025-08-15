@@ -127,7 +127,17 @@ export default function Home() {
             <Link href="#contact" className="font-medium hover:text-primary transition-colors">
               联系我们
             </Link>
-            <Button className="bg-blue-600 hover:bg-blue-700">预约咨询</Button>
+            <Button
+              onClick={() => {
+                const contactSection = document.getElementById('contact');
+                if (contactSection) {
+                  contactSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+            >
+              预约咨询
+            </Button>
           </nav>
 
           {/* 移动端菜单按钮 */}
@@ -181,7 +191,17 @@ export default function Home() {
                 >
                   联系我们
                 </Link>
-                <Button className="bg-blue-600 hover:bg-blue-700 w-full">预约咨询</Button>
+                <Button
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 w-full"
+                >
+                  预约咨询
+                </Button>
               </div>
             </motion.div>
           )}
@@ -218,7 +238,13 @@ export default function Home() {
               为医院、药企提供R Shiny平台和智能分析解决方案
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button
+              <Button 
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
                 variant="outline"
                 className="border-white text-white hover:bg-white/10 text-lg px-8 py-6 bg-transparent"
               >
@@ -348,9 +374,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium">跨领域整合与定制化方案</p>
-                    <p className="text-sm text-gray-500">结合行业知识与新兴技术，为客户提供定制化数字化转型方案
-
-</p>
+                    <p className="text-sm text-gray-500">结合行业知识与新兴技术，为客户提供定制化数字化转型方案</p>
                   </div>
                 </div>
               </div>
@@ -709,7 +733,7 @@ export default function Home() {
                   <Mail className="w-4 h-4 mr-2" /> contact@mstech-data.com
                 </li>
                 <li className="flex items-center text-gray-400">
-                  <MapPin className="w-4 h-4 mr-2" /> 深圳市南山区科技园区
+                  <MapPin className="w-4 h-4 mr-2" /> 深圳市龙华区红山6979
                 </li>
               </ul>
             </div>
