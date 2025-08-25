@@ -1,8 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { ChevronRight, ArrowRight, Phone, Mail, MapPin, Menu, X } from "lucide-react"
+import { ChevronRight, ArrowRight, Phone, Mail, MapPin, Menu, X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import Image from "next/image"
@@ -18,6 +18,20 @@ export default function Home() {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [aiConversationId, setAiConversationId] = useState<string | null>(null)
+  const [aiMessages, setAiMessages] = useState<{ role: string; content: string }[]>([])
+  const [aiInput, setAiInput] = useState("")
+  const [isAiLoading, setIsAiLoading] = useState(false)
+  const [isAiModalOpen, setIsAiModalOpen] = useState(false)
+  const aiMessagesEndRef = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    aiMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [aiMessages, isAiLoading])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +65,86 @@ export default function Home() {
       toast.error('发送失败，请稍后再试。')
     } finally {
       setIsSubmitting(false)
+    }
+  }
+
+  const handleAiSubmit = async (api: string, query: string) => {
+    setIsAiLoading(true)
+    try {
+      const response = await fetch('https://api.dify.ai/v1/chat-messages', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${api}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          inputs: {},
+          query: query,
+          response_mode: "streaming",
+          conversation_id: aiConversationId,
+          user: "mstech-user"
+        }),
+      })
+
+      if (response.ok && response.body) {
+        // 处理SSE流式响应
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let accumulatedContent = '';
+        let conversationId = aiConversationId;
+        
+        // 添加一个空的AI消息占位符
+        setAiMessages(prev => [...prev, { role: 'ai', content: '' }]);
+        
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n\n');
+          
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6));
+                
+                // 更新对话ID
+                if (data.conversation_id && !conversationId) {
+                  conversationId = data.conversation_id;
+                  setAiConversationId(conversationId);
+                }
+                
+                // 累积内容
+                if (data.answer) {
+                  accumulatedContent += data.answer;
+                  
+                  // 更新AI消息内容
+                  setAiMessages(prev => {
+                    const newMessages = [...prev];
+                    const lastMessage = newMessages[newMessages.length - 1];
+                    if (lastMessage && lastMessage.role === 'ai') {
+                      newMessages[newMessages.length - 1] = {
+                        ...lastMessage,
+                        content: accumulatedContent
+                      };
+                    }
+                    return newMessages;
+                  });
+                }
+              } catch (e) {
+                // 忽略解析错误
+                console.warn('Failed to parse SSE data:', line);
+              }
+            }
+          }
+        }
+      } else {
+        toast.error('AI服务请求失败，请稍后再试。')
+      }
+    } catch (error) {
+      toast.error('AI服务请求失败，请稍后再试。')
+    } finally {
+      setIsAiLoading(false)
     }
   }
 
@@ -95,6 +189,14 @@ export default function Home() {
     },
   ]
 
+  const aiCases = [
+    {
+      title: "AI男科医生案例",
+      description: "基于Dify平台开发的AI男科医生，提供智能问诊服务",
+      api: "app-6P3BiitCyWEB1YWmFMez56pD",
+    },
+  ]
+
   return (
     <div className="relative">
       {/* 导航栏 */}
@@ -121,8 +223,11 @@ export default function Home() {
             <Link href="#solutions" className="font-medium hover:text-primary transition-colors">
               解决方案
             </Link>
-            <Link href="#cases" className="font-medium hover:text-primary transition-colors">
+            <Link href="#ai-experience" className="font-medium hover:text-primary transition-colors">
               成功案例
+            </Link>
+            <Link href="#ai-experience-1" className="font-medium hover:text-primary transition-colors">
+              AI案例体验
             </Link>
             <Link href="#contact" className="font-medium hover:text-primary transition-colors">
               联系我们
@@ -178,11 +283,18 @@ export default function Home() {
                   解决方案
                 </Link>
                 <Link
-                  href="#cases"
+                  href="#ai-experience"
                   className="font-medium py-2 hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   成功案例
+                </Link>
+                <Link
+                  href="#ai-experience-1"
+                  className="font-medium py-2 hover:text-primary transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  AI案例
                 </Link>
                 <Link
                   href="#contact"
@@ -438,8 +550,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 成功案例 */}
-      <section id="cases" className="py-20 bg-gray-50">
+      {/* AI案例体验 */}
+      <section id="ai-experience" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
@@ -497,6 +609,80 @@ export default function Home() {
           </div>
 
 
+        </div>
+      </section>
+
+      {/* AI案例体验 */}
+      <section id="ai-experience-1" className="py-20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-3xl md:text-4xl font-bold mb-4"
+            >
+              AI案例体验
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              whileInView={{ opacity: 1, width: "80px" }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              viewport={{ once: true }}
+              className="h-1 bg-blue-600 mx-auto mb-6"
+            />
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="text-lg text-gray-600 max-w-3xl mx-auto"
+            >
+              我们利用AI技术为医疗行业提供智能化解决方案，以下是我们的一些AI应用案例
+            </motion.p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {aiCases.map((item, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-white rounded-lg overflow-hidden shadow-lg group"
+              >
+                <div className="p-6">
+                  <div className="flex justify-center mb-4">
+                    <Image 
+                      src="/msbot.png" 
+                      alt="AI医生logo" 
+                      width={80} 
+                      height={80} 
+                      className="rounded-full"
+                    />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-center">{item.title}</h3>
+                  <p className="text-gray-600 mb-4">{item.description}</p>
+                  <div className="mt-4">
+                    <Button 
+                      className="bg-blue-600 hover:bg-blue-700 text-white w-full"
+                      onClick={() => {
+                        // 打开模态框并初始化AI对话
+                        setIsAiModalOpen(true);
+                        // 清空之前的对话历史
+                        setAiMessages([]);
+                        setAiConversationId(null);
+                      }}
+                    >
+                      体验AI服务
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -639,6 +825,105 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* AI对话模态框 */}
+      <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${isAiModalOpen ? 'block' : 'hidden'}`}>
+        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl border border-blue-100">
+          <div className="p-5 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-t-xl flex justify-between items-center">
+            <div className="flex items-center space-x-3">
+              <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+              <h3 className="text-xl font-bold text-white ml-4">AI男科医生</h3>
+            </div>
+            <button 
+              className="text-white hover:text-gray-200 transition-colors"
+              onClick={() => setIsAiModalOpen(false)}
+            >
+              <X size={24} />
+            </button>
+          </div>
+          <div className="p-5 bg-blue-100 border-b border-blue-200">
+            <div className="flex items-start space-x-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">AI</div>
+              <div>
+                <p className="text-sm text-gray-800 mb-2 font-medium">您好，欢迎体验男科医疗AI咨询服务，请按下面格式简要描述您的情况：</p>
+                <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
+                  <p className="font-medium mb-1">病情信息</p>
+                  <p>年龄：</p>
+                  <p>病情描述：如早泄，龟头敏感</p>
+                  <p>过敏史： 如有</p>
+                  <p>疾病史： 如有</p>
+                  <p className="font-medium mt-2 mb-1">现病史（示例）</p>
+                  <p>症状: 早泄，龟头敏感。挺久的了，记不清了。平时手淫三四次。早晨或夜间没有正常勃起。晨勃、性生活开始、性生活过程中阴茎勃起硬度为黄瓜。性生活中间停下来不动会疲软。与伴侣间感情关系一般</p>
+                  <p className="font-medium mt-2 mb-1">用药情况: 否认历史用药</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gradient-to-b from-blue-50/50 to-indigo-50/50 h-96" ref={aiMessagesEndRef}>
+            {aiMessages.map((message, index) => (
+              <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                {message.role !== 'user' && (
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3 mt-1">AI</div>
+                )}
+                <div className={`max-w-[80%] p-4 rounded-2xl ${message.role === 'user' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none shadow-md border border-blue-100'} `}>
+                  <div className="prose prose-sm max-w-none">
+                    {message.content.split('\n').map((line, i) => (
+                      <p key={i} className="mb-2 last:mb-0">{line}</p>
+                    ))}
+                  </div>
+                </div>
+                {message.role === 'user' && (
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold ml-3 mt-1">您</div>
+                )}
+              </div>
+            ))}
+            {isAiLoading && (
+              <div className="flex justify-start">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3 mt-1">AI</div>
+                <div className="bg-white text-gray-800 p-4 rounded-2xl rounded-tl-none shadow-md border border-blue-100">
+                  <div className="flex space-x-2">
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="p-5 bg-white border-t border-blue-100">
+            <div className="flex space-x-3">
+              <input
+                type="text"
+                className="flex-1 border border-blue-300 rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                placeholder="请输入您的问题..."
+                value={aiInput}
+                onChange={(e) => setAiInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !isAiLoading) {
+                    handleAiSubmit(aiCases[0].api, aiInput);
+                    setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
+                    setAiInput("");
+                  }
+                }}
+              />
+              <button
+                className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-4 rounded-full hover:from-blue-700 hover:to-indigo-800 disabled:opacity-50 shadow-md transition-all duration-200 flex items-center font-medium"
+                disabled={isAiLoading}
+                onClick={() => {
+                  handleAiSubmit(aiCases[0].api, aiInput);
+                  setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
+                  setAiInput("");
+                }}
+              >
+                <Send size={18} className="mr-2" />
+                发送
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* 页脚 */}
       <footer className="bg-gray-950 text-white py-12">
