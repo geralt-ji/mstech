@@ -831,6 +831,7 @@ export default function Home() {
                       borderColor: '#4b5563',
                       color: 'white'
                     }}
+                    className="placeholder-white"
                   />
                 </div>
 
@@ -851,6 +852,7 @@ export default function Home() {
                       borderColor: '#4b5563',
                       color: 'white'
                     }}
+                    className="placeholder-white"
                   />
                 </div>
 
@@ -870,6 +872,7 @@ export default function Home() {
                       borderColor: '#4b5563',
                       color: 'white'
                     }}
+                    className="placeholder-white"
                   />
                 </div>
 
