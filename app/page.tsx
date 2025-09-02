@@ -25,6 +25,18 @@ export default function Home() {
   const [isAiModalOpen, setIsAiModalOpen] = useState(false)
   const aiMessagesEndRef = useRef<HTMLDivElement>(null)
 
+  // 添加当前AI案例状态
+  const [currentAiCase, setCurrentAiCase] = useState(0);
+
+  // 添加处理AI案例点击的函数
+  const handleAiCaseClick = (index: number) => {
+    setCurrentAiCase(index);
+    setIsAiModalOpen(true);
+    // 清空之前的对话历史
+    setAiMessages([]);
+    setAiConversationId(null);
+  };
+
   const scrollToBottom = () => {
     aiMessagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }
@@ -192,8 +204,18 @@ export default function Home() {
   const aiCases = [
     {
       title: "AI男科医生案例",
-      description: "基于Dify平台开发的AI男科医生，提供智能问诊服务",
+      description: "基于Dify平台开发的AI男科医生，提供智能问诊服务。利用先进的自然语言处理技术，能够准确理解患者症状并给出专业建议。",
       api: "app-6P3BiitCyWEB1YWmFMez56pD",
+    },
+    {
+      title: "ADaM医学智能助手",
+      description: "ADaM是临床研究数据分析的标准模型，专门设计用于支持统计分析和高效率的数据审查。ADSL作为ADaM模型的核心数据集，为临床试验的统计分析提供基础框架。",
+      api: "app-W2FKsslmjdpL5H5ZjvGbBPqQ",
+    },
+    {
+      title: "WHI医学数据分析助手",
+      description: "WHI医学数据分析助手是基于腾讯云智能技术开发的医学研究专业工具，专门用于Women's Health Initiative研究数据的深度分析和解读。为女性健康领域的研究和临床决策提供可靠的数据支持。",
+      api: "app-v5DrQldm5ZnohmmszbRIdPvN",
     },
   ]
 
@@ -432,7 +454,7 @@ export default function Home() {
               <div className="space-y-6 mb-8">
                 <div className="border-l-4 border-blue-600 pl-4">
                   <h4 className="font-bold text-lg">杨博士 | 创始人 & 首席科学家</h4>
-                  <p className="text-sm text-gray-600">哈佛大学生物统计博士后 | 深圳市海外高层次人才</p>
+                  <p className="text-sm text-gray-600">哈佛大学生物统计 posterior | 深圳市海外高层次人才</p>
                   <p className="text-sm text-gray-500 mt-1">专注医疗大数据15年+，主导药物临床试验统计咨询</p>
                 </div>
 
@@ -668,13 +690,7 @@ export default function Home() {
                   <div className="mt-4">
                     <Button 
                       className="bg-blue-600 hover:bg-blue-700 text-white w-full"
-                      onClick={() => {
-                        // 打开模态框并初始化AI对话
-                        setIsAiModalOpen(true);
-                        // 清空之前的对话历史
-                        setAiMessages([]);
-                        setAiConversationId(null);
-                      }}
+                      onClick={() => handleAiCaseClick(index)}
                     >
                       体验AI服务
                     </Button>
@@ -733,7 +749,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium text-lg mb-1">电话</p>
-                    <p className="text-gray-300">+86 0755-8888-9999</p>
+                    <p className="text-gray-300">+86 19124386399</p>
                   </div>
                 </div>
 
@@ -743,7 +759,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium text-lg mb-1">邮箱</p>
-                    <p className="text-gray-300">contact@mstech-data.com</p>
+                    <p className="text-gray-300">mstech-ai@outlook.com</p>
                   </div>
                 </div>
 
@@ -753,7 +769,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="font-medium text-lg mb-1">地址</p>
-                    <p className="text-gray-300">深圳市南山区科技园区医疗大数据中心</p>
+                    <p className="text-gray-300">深圳市龙华区红山6979</p>
                   </div>
                 </div>
               </div>
@@ -834,7 +850,7 @@ export default function Home() {
               <div className="w-3 h-3 bg-red-400 rounded-full"></div>
               <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
               <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-              <h3 className="text-xl font-bold text-white ml-4">AI男科医生</h3>
+              <h3 className="text-xl font-bold text-white ml-4">{aiCases[currentAiCase].title}</h3>
             </div>
             <button 
               className="text-white hover:text-gray-200 transition-colors"
@@ -847,17 +863,27 @@ export default function Home() {
             <div className="flex items-start space-x-3">
               <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">AI</div>
               <div>
-                <p className="text-sm text-gray-800 mb-2 font-medium">您好，欢迎体验男科医疗AI咨询服务，请按下面格式简要描述您的情况：</p>
-                <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
-                  <p className="font-medium mb-1">病情信息</p>
-                  <p>年龄：</p>
-                  <p>病情描述：如早泄，龟头敏感</p>
-                  <p>过敏史： 如有</p>
-                  <p>疾病史： 如有</p>
-                  <p className="font-medium mt-2 mb-1">现病史（示例）</p>
-                  <p>症状: 早泄，龟头敏感。挺久的了，记不清了。平时手淫三四次。早晨或夜间没有正常勃起。晨勃、性生活开始、性生活过程中阴茎勃起硬度为黄瓜。性生活中间停下来不动会疲软。与伴侣间感情关系一般</p>
-                  <p className="font-medium mt-2 mb-1">用药情况: 否认历史用药</p>
-                </div>
+                <p className="text-sm text-gray-800 mb-2 font-medium">您好，欢迎体验{aiCases[currentAiCase].title}，请按下面格式简要描述您的情况：</p>
+                {currentAiCase === 1 ? (
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
+                    <p className="font-medium mb-1">请输入你的问题 例如:ADSL 数据集中的关键变量及其定义是什么？</p>
+                  </div>
+                ) : currentAiCase === 2 ? (
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
+                    <p className="font-medium mb-1">请输入你的问题 例如:WHl 研究中血红蛋白 (HGB) 变量的测量单位和正常范围是多少？</p>
+                  </div>
+                ) : (
+                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
+                    <p className="font-medium mb-1">病情信息</p>
+                    <p>年龄：</p>
+                    <p>病情描述：如早泄，龟头敏感</p>
+                    <p>过敏史： 如有</p>
+                    <p>疾病史： 如有</p>
+                    <p className="font-medium mt-2 mb-1">现病史（示例）</p>
+                    <p>症状: 早泄，龟头敏感。挺久的了，记不清了。平时手淫三四次。早晨或夜间没有正常勃起。晨勃、性生活开始、性生活过程中阴茎勃起硬度为黄瓜。性生活中间停下来不动会疲软。与伴侣间感情关系一般</p>
+                    <p className="font-medium mt-2 mb-1">用药情况: 否认历史用药</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -902,7 +928,7 @@ export default function Home() {
                 onChange={(e) => setAiInput(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && !isAiLoading) {
-                    handleAiSubmit(aiCases[0].api, aiInput);
+                    handleAiSubmit(aiCases[currentAiCase].api, aiInput);
                     setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
                     setAiInput("");
                   }
@@ -912,7 +938,7 @@ export default function Home() {
                 className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-4 rounded-full hover:from-blue-700 hover:to-indigo-800 disabled:opacity-50 shadow-md transition-all duration-200 flex items-center font-medium"
                 disabled={isAiLoading}
                 onClick={() => {
-                  handleAiSubmit(aiCases[0].api, aiInput);
+                  handleAiSubmit(aiCases[currentAiCase].api, aiInput);
                   setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
                   setAiInput("");
                 }}
@@ -1012,10 +1038,10 @@ export default function Home() {
               <h4 className="text-lg font-bold mb-4">联系我们</h4>
               <ul className="grid gap-2">
                 <li className="flex items-center text-gray-400">
-                  <Phone className="w-4 h-4 mr-2" /> +86 0755-8888-9999
+                  <Phone className="w-4 h-4 mr-2" /> +86 19124386399
                 </li>
                 <li className="flex items-center text-gray-400">
-                  <Mail className="w-4 h-4 mr-2" /> contact@mstech-data.com
+                  <Mail className="w-4 h-4 mr-2" /> mstech-ai@outlook.com
                 </li>
                 <li className="flex items-center text-gray-400">
                   <MapPin className="w-4 h-4 mr-2" /> 深圳市龙华区红山6979
