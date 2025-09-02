@@ -356,7 +356,7 @@ export default function Home() {
         </div>
         <div className="container mx-auto px-4 z-10 relative">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
@@ -403,7 +403,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
@@ -412,14 +412,14 @@ export default function Home() {
               关于我们
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 1, width: "80px" }}
               whileInView={{ opacity: 1, width: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               className="h-1 bg-blue-600 mx-auto mb-6"
             />
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
@@ -431,7 +431,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
@@ -441,7 +441,7 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
@@ -524,7 +524,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
@@ -533,14 +533,14 @@ export default function Home() {
               解决方案
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 1, width: "80px" }}
               whileInView={{ opacity: 1, width: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               className="h-1 bg-blue-600 mx-auto mb-6"
             />
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
@@ -554,7 +554,7 @@ export default function Home() {
             {solutions.map((solution, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
@@ -577,7 +577,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
@@ -586,14 +586,14 @@ export default function Home() {
               成功案例
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 1, width: "80px" }}
               whileInView={{ opacity: 1, width: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               className="h-1 bg-blue-600 mx-auto mb-6"
             />
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
@@ -607,7 +607,7 @@ export default function Home() {
             {cases.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
@@ -639,7 +639,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
@@ -648,14 +648,14 @@ export default function Home() {
               AI案例体验
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 1, width: "80px" }}
               whileInView={{ opacity: 1, width: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               className="h-1 bg-blue-600 mx-auto mb-6"
             />
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
@@ -669,7 +669,7 @@ export default function Home() {
             {aiCases.map((item, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
@@ -707,7 +707,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
@@ -716,14 +716,14 @@ export default function Home() {
               联系我们
             </motion.h2>
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              initial={{ opacity: 1, width: "80px" }}
               whileInView={{ opacity: 1, width: "80px" }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
               className="h-1 bg-blue-600 mx-auto mb-6"
             />
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               viewport={{ once: true }}
@@ -735,7 +735,7 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 gap-12">
             <motion.div
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
@@ -776,7 +776,7 @@ export default function Home() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 1, x: 0 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
