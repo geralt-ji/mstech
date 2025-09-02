@@ -224,34 +224,34 @@ export default function Home() {
       {/* 导航栏 */}
       <header
         className={`fixed w-full z-50 transition-all duration-300 ${
-          scrollY > 50 ? "bg-white shadow-md py-2" : "bg-transparent py-4"
+          scrollY > 50 ? "bg-white shadow-md py-2" : "bg-white py-4"
         }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
           <Link href="/" className="flex items-center">
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-3xl font-bold text-primary">
               MS<span className="text-blue-600">TECH</span>
             </div>
           </Link>
 
           {/* 桌面导航 */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#home" className="font-medium hover:text-primary transition-colors">
+            <Link href="#home" className="font-medium hover:text-primary transition-colors text-lg">
               首页
             </Link>
-            <Link href="#about" className="font-medium hover:text-primary transition-colors">
+            <Link href="#about" className="font-medium hover:text-primary transition-colors text-lg">
               关于我们
             </Link>
-            <Link href="#solutions" className="font-medium hover:text-primary transition-colors">
+            <Link href="#solutions" className="font-medium hover:text-primary transition-colors text-lg">
               解决方案
             </Link>
-            <Link href="#ai-experience" className="font-medium hover:text-primary transition-colors">
+            <Link href="#ai-experience" className="font-medium hover:text-primary transition-colors text-lg">
               成功案例
             </Link>
-            <Link href="#ai-experience-1" className="font-medium hover:text-primary transition-colors">
+            <Link href="#ai-experience-1" className="font-medium hover:text-primary transition-colors text-lg">
               AI案例体验
             </Link>
-            <Link href="#contact" className="font-medium hover:text-primary transition-colors">
+            <Link href="#contact" className="font-medium hover:text-primary transition-colors text-lg">
               联系我们
             </Link>
             <Button
@@ -274,53 +274,53 @@ export default function Home() {
         </div>
 
         {/* 移动端导航菜单 */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-white"
-            >
+          <AnimatePresence>
+            {isMenuOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden bg-white py-4"
+              >
               <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
                 <Link
                   href="#home"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   首页
                 </Link>
                 <Link
                   href="#about"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   关于我们
                 </Link>
                 <Link
                   href="#solutions"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   解决方案
                 </Link>
                 <Link
                   href="#ai-experience"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   成功案例
                 </Link>
                 <Link
                   href="#ai-experience-1"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   AI案例
                 </Link>
                 <Link
                   href="#contact"
-                  className="font-medium py-2 hover:text-primary transition-colors"
+                  className="font-medium py-2 hover:text-primary transition-colors text-lg"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   联系我们
