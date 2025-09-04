@@ -189,12 +189,12 @@ export default function Home() {
     {
       title: "同济医院-男科数字医生平台",
       description: "AI Agent + RAG知识库，隐私保护架构，患者自助问诊效率提升50%，科研数据沉淀量增长200%",
-      image: "/doctor.png?height=400&width=600",
+      image: getImagePath("/doctor.png?height=400&width=600"),
     },
     {
       title: "医渡科技-R平台升级",
       description: "替代SAS搭建Shiny可视化平台，SDTM→ADaM自动转换，开发周期从3个月缩短至2周，年度IT成本下降60%",
-      image: "/shiny.png?height=400&width=600",
+      image: getImagePath("/shiny.png?height=400&width=600"),
     },
     {
       title: "清华大学统计中心-网页前端搭建服务",
@@ -354,7 +354,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-600/80 z-10" />
           <Image
-            src="/lims-for-biotech.jpg"
+            src={getImagePath("/lims-for-biotech.jpg")}
             alt="MSTECH背景"
             fill
             className="object-cover"
@@ -453,7 +453,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative h-[400px] rounded-lg overflow-hidden"
             >
-              <Image src="/core-team.jpg?height=800&width=600" alt="MSTECH团队" fill className="object-cover" />
+              <Image src={getImagePath("/core-team.jpg?height=800&width=600")} alt="MSTECH团队" fill className="object-cover" />
             </motion.div>
 
             <motion.div
