@@ -8,6 +8,7 @@ const { TextArea } = Input
 import Link from "next/link"
 import Image from "next/image"
 import { toast } from "sonner"
+import { getImagePath } from "@/lib/utils"
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0)
@@ -198,7 +199,7 @@ export default function Home() {
     {
       title: "清华大学统计中心-网页前端搭建服务",
       description: "构建生物医药知识图谱及搜索引擎开发，实现医药文献智能检索和知识关联分析",
-      image: "/medical.png?height=400&width=600",
+      image: getImagePath("/medical.png?height=400&width=600"),
     },
   ]
 
@@ -919,7 +920,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                     <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={24} height={24} className="" />
+                     <Image src={currentAiCase === 0 ? getImagePath("/ai-urology-doctor.svg") : currentAiCase === 1 ? getImagePath("/adam-medical-assistant.svg") : getImagePath("/whi-medical-assistant.svg")} alt="AI" width={24} height={24} className="" />
                    </div>
                   <h3 className="text-lg font-semibold text-white">
                     {aiCases[currentAiCase].title} - AI智能助手
@@ -1000,7 +1001,7 @@ export default function Home() {
                          transition={{ delay: 0.2 }}
                          className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 mt-1 shadow-lg"
                        >
-                         <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={32} height={32} className="" />
+                         <Image src={currentAiCase === 0 ? getImagePath("/ai-urology-doctor.svg") : currentAiCase === 1 ? getImagePath("/adam-medical-assistant.svg") : getImagePath("/whi-medical-assistant.svg")} alt="AI" width={32} height={32} className="" />
                        </motion.div>
                      )}
                     <motion.div 
