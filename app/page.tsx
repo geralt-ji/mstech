@@ -230,7 +230,14 @@ export default function Home() {
         }`}
       >
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center space-x-2">
+            <Image
+              src={getImagePath("/logo.png")}
+              alt="MSTECH Logo"
+              width={48}
+              height={48}
+              className="h-12 w-12"
+            />
             <div className="text-3xl font-bold text-primary">
               MS<span className="text-blue-600">TECH</span>
             </div>
@@ -1115,8 +1122,17 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
-              <div className="text-2xl font-bold text-white mb-4">
-                MS<span className="text-blue-500">TECH</span>
+              <div className="flex items-center space-x-2 mb-4">
+                <Image
+                   src={getImagePath("/logo.png")}
+                   alt="MSTECH Logo"
+                   width={40}
+                   height={40}
+                   className="h-10 w-10"
+                 />
+                <div className="text-2xl font-bold text-white">
+                  MS<span className="text-blue-500">TECH</span>
+                </div>
               </div>
               <p className="text-gray-400 mb-6">医疗数据智能化，科研分析新引擎。MSTECH专注医疗大数据与AI技术融合。</p>
               <div className="flex space-x-4">
