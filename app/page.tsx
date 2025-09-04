@@ -3,7 +3,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronRight, ArrowRight, Phone, Mail, MapPin, Menu, X, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Button, Input, message } from "antd"
+const { TextArea } = Input
 import Link from "next/link"
 import Image from "next/image"
 import { toast } from "sonner"
@@ -255,13 +256,15 @@ export default function Home() {
               联系我们
             </Link>
             <Button
+              type="primary"
+              size="large"
               onClick={() => {
                 const contactSection = document.getElementById('contact');
                 if (contactSection) {
                   contactSection.scrollIntoView({ behavior: 'smooth' });
                 }
               }}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors"
+              style={{ backgroundColor: '#2563eb', borderColor: '#2563eb' }}
             >
               预约咨询
             </Button>
@@ -326,13 +329,16 @@ export default function Home() {
                   联系我们
                 </Link>
                 <Button
+                  type="primary"
+                  size="large"
+                  block
                   onClick={() => {
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {
                       contactSection.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="bg-blue-600 hover:bg-blue-700 w-full"
+                  style={{ backgroundColor: '#2563eb', borderColor: '#2563eb' }}
                 >
                   预约咨询
                 </Button>
@@ -373,14 +379,23 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button 
+                type="default"
+                ghost
+                size="large"
                 onClick={() => {
                   const contactSection = document.getElementById('contact');
                   if (contactSection) {
                     contactSection.scrollIntoView({ behavior: 'smooth' });
                   }
                 }}
-                variant="outline"
-                className="border-white text-white hover:bg-white/10 text-lg px-8 py-6 bg-transparent"
+                style={{ 
+                  borderColor: 'white', 
+                  color: 'white',
+                  fontSize: '18px',
+                  height: '48px',
+                  paddingLeft: '32px',
+                  paddingRight: '32px'
+                }}
               >
                 联系我们
               </Button>
@@ -673,24 +688,39 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true }}
-                className="bg-white rounded-lg overflow-hidden shadow-lg group"
+                whileHover={{ 
+                  y: -10, 
+                  scale: 1.02,
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="bg-white rounded-lg overflow-hidden shadow-lg group cursor-pointer transform transition-all duration-150 hover:shadow-2xl"
               >
-                <div className="p-6">
+                <div className="p-6 h-full flex flex-col">
                   <div className="flex justify-center mb-4">
                     <Image 
-                      src="/msbot.png" 
-                      alt="AI医生logo" 
+                      src={index === 0 ? "/ai-urology-doctor.svg" : index === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} 
+                      alt={`${item.title}图标`} 
                       width={80} 
                       height={80} 
-                      className="rounded-full"
+                      className=""
                     />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-center">{item.title}</h3>
-                  <p className="text-gray-600 mb-4">{item.description}</p>
-                  <div className="mt-4">
+                  <h3 className="text-xl font-bold mb-3 text-center group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                  <p className="text-gray-600 mb-6 flex-grow">{item.description}</p>
+                  <div className="mt-auto">
                     <Button 
-                      className="bg-blue-600 hover:bg-blue-700 text-white w-full"
+                      type="primary"
+                      size="large"
+                      block
                       onClick={() => handleAiCaseClick(index)}
+                      style={{ 
+                        background: 'linear-gradient(to right, #2563eb, #4f46e5)',
+                        borderColor: 'transparent',
+                        height: '48px'
+                      }}
+                      icon={<ArrowRight className="w-4 h-4" />}
+                      iconPosition="end"
                     >
                       体验AI服务
                     </Button>
@@ -789,14 +819,19 @@ export default function Home() {
                   <label htmlFor="name" className="text-sm font-medium">
                     姓名
                   </label>
-                  <input
-                    type="text"
+                  <Input
                     id="name"
-                    className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
+                    size="large"
                     placeholder="请输入您的姓名"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
+                    style={{
+                      backgroundColor: '#374151',
+                      borderColor: '#4b5563',
+                      color: 'white'
+                    }}
+                    className="placeholder-white"
                   />
                 </div>
 
@@ -804,14 +839,20 @@ export default function Home() {
                   <label htmlFor="email" className="text-sm font-medium">
                     邮箱
                   </label>
-                  <input
+                  <Input
                     type="email"
                     id="email"
-                    className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
+                    size="large"
                     placeholder="请输入您的邮箱"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
+                    style={{
+                      backgroundColor: '#374151',
+                      borderColor: '#4b5563',
+                      color: 'white'
+                    }}
+                    className="placeholder-white"
                   />
                 </div>
 
@@ -819,20 +860,28 @@ export default function Home() {
                   <label htmlFor="message" className="text-sm font-medium">
                     留言
                   </label>
-                  <textarea
+                  <TextArea
                     id="message"
                     rows={4}
-                    className="bg-gray-700 border-gray-600 rounded-lg p-3 text-white"
                     placeholder="请输入您的留言"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     required
+                    style={{
+                      backgroundColor: '#374151',
+                      borderColor: '#4b5563',
+                      color: 'white'
+                    }}
+                    className="placeholder-white"
                   />
                 </div>
 
                 <Button 
-                  className="bg-blue-600 hover:bg-blue-700 w-full" 
-                  disabled={isSubmitting}
+                  type="primary"
+                  size="large"
+                  block
+                  loading={isSubmitting}
+                  style={{ backgroundColor: '#2563eb', borderColor: '#2563eb' }}
                 >
                   {isSubmitting ? '发送中...' : '发送消息'}
                 </Button>
@@ -843,113 +892,222 @@ export default function Home() {
       </section>
 
       {/* AI对话模态框 */}
-      <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${isAiModalOpen ? 'block' : 'hidden'}`}>
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl w-full max-w-2xl max-h-[80vh] flex flex-col shadow-2xl border border-blue-100">
-          <div className="p-5 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-t-xl flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <div className="w-3 h-3 bg-red-400 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-400 rounded-full"></div>
-              <h3 className="text-xl font-bold text-white ml-4">{aiCases[currentAiCase].title}</h3>
-            </div>
-            <button 
-              className="text-white hover:text-gray-200 transition-colors"
-              onClick={() => setIsAiModalOpen(false)}
+      <AnimatePresence>
+        {isAiModalOpen && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-gradient-to-br from-white via-blue-50 to-indigo-100 rounded-3xl shadow-2xl w-full max-w-4xl h-[85vh] flex flex-col overflow-hidden border border-blue-200"
             >
-              <X size={24} />
-            </button>
-          </div>
-          <div className="p-5 bg-blue-100 border-b border-blue-200">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">AI</div>
-              <div>
-                <p className="text-sm text-gray-800 mb-2 font-medium">您好，欢迎体验{aiCases[currentAiCase].title}，请按下面格式简要描述您的情况：</p>
-                {currentAiCase === 1 ? (
-                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
-                    <p className="font-medium mb-1">请输入你的问题 例如:ADSL 数据集中的关键变量及其定义是什么？</p>
-                  </div>
-                ) : currentAiCase === 2 ? (
-                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
-                    <p className="font-medium mb-1">请输入你的问题 例如:WHl 研究中血红蛋白 (HGB) 变量的测量单位和正常范围是多少？</p>
-                  </div>
-                ) : (
-                  <div className="bg-white p-3 rounded-lg shadow-sm text-xs text-gray-700">
-                    <p className="font-medium mb-1">病情信息</p>
-                    <p>年龄：</p>
-                    <p>病情描述：如早泄，龟头敏感</p>
-                    <p>过敏史： 如有</p>
-                    <p>疾病史： 如有</p>
-                    <p className="font-medium mt-2 mb-1">现病史（示例）</p>
-                    <p>症状: 早泄，龟头敏感。挺久的了，记不清了。平时手淫三四次。早晨或夜间没有正常勃起。晨勃、性生活开始、性生活过程中阴茎勃起硬度为黄瓜。性生活中间停下来不动会疲软。与伴侣间感情关系一般</p>
-                    <p className="font-medium mt-2 mb-1">用药情况: 否认历史用药</p>
-                  </div>
-                )}
+              <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-4 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <motion.div 
+                    whileHover={{ scale: 1.2 }}
+                    className="w-3 h-3 bg-red-400 rounded-full shadow-sm"
+                  ></motion.div>
+                  <motion.div 
+                    whileHover={{ scale: 1.2 }}
+                    className="w-3 h-3 bg-yellow-400 rounded-full shadow-sm"
+                  ></motion.div>
+                  <motion.div 
+                    whileHover={{ scale: 1.2 }}
+                    className="w-3 h-3 bg-green-400 rounded-full shadow-sm"
+                  ></motion.div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                     <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={24} height={24} className="" />
+                   </div>
+                  <h3 className="text-lg font-semibold text-white">
+                    {aiCases[currentAiCase].title} - AI智能助手
+                  </h3>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsAiModalOpen(false)}
+                  className="text-white hover:text-red-200 transition-colors bg-white bg-opacity-20 rounded-full p-2"
+                >
+                  <X className="w-5 h-5" />
+                </motion.button>
               </div>
-            </div>
-          </div>
-          <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-gradient-to-b from-blue-50/50 to-indigo-50/50 h-96" ref={aiMessagesEndRef}>
-            {aiMessages.map((message, index) => (
-              <div key={index} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {message.role !== 'user' && (
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3 mt-1">AI</div>
-                )}
-                <div className={`max-w-[80%] p-4 rounded-2xl ${message.role === 'user' ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white rounded-tr-none' : 'bg-white text-gray-800 rounded-tl-none shadow-md border border-blue-100'} `}>
-                  <div className="prose prose-sm max-w-none">
-                    {message.content.split('\n').map((line, i) => (
-                      <p key={i} className="mb-2 last:mb-0">{line}</p>
-                    ))}
+              <div className="bg-gradient-to-r from-blue-100 via-indigo-100 to-purple-100 px-6 py-5 border-b border-blue-200">
+                <div className="flex items-start space-x-4">
+                  <motion.div 
+                     initial={{ scale: 0 }}
+                     animate={{ scale: 1 }}
+                     transition={{ delay: 0.2, type: "spring" }}
+                     className="flex-shrink-0 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg"
+                   >
+                     <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={40} height={40} className="" />
+                   </motion.div>
+                  <div className="flex-1">
+                    <motion.p 
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-sm text-gray-800 mb-3 font-medium"
+                    >
+                      您好，欢迎体验{aiCases[currentAiCase].title}，请按下面格式简要描述您的情况：
+                    </motion.p>
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      {currentAiCase === 1 ? (
+                        <div className="bg-gradient-to-r from-white to-blue-50 p-4 rounded-xl shadow-md border border-blue-200 text-sm text-gray-700">
+                          <p className="font-medium mb-1 text-blue-800">请输入你的问题 例如:ADSL 数据集中的关键变量及其定义是什么？</p>
+                        </div>
+                      ) : currentAiCase === 2 ? (
+                        <div className="bg-gradient-to-r from-white to-indigo-50 p-4 rounded-xl shadow-md border border-indigo-200 text-sm text-gray-700">
+                          <p className="font-medium mb-1 text-indigo-800">请输入你的问题 例如:WHl 研究中血红蛋白 (HGB) 变量的测量单位和正常范围是多少？</p>
+                        </div>
+                      ) : (
+                        <div className="bg-gradient-to-r from-white to-purple-50 p-4 rounded-xl shadow-md border border-purple-200 text-sm text-gray-700">
+                          <p className="font-medium mb-2 text-purple-800">病情信息</p>
+                          <div className="space-y-1 text-xs">
+                            <p>年龄：</p>
+                            <p>病情描述：如早泄，龟头敏感</p>
+                            <p>过敏史： 如有</p>
+                            <p>疾病史： 如有</p>
+                          </div>
+                          <p className="font-medium mt-3 mb-2 text-purple-800">现病史（示例）</p>
+                          <p className="text-xs leading-relaxed">症状: 早泄，龟头敏感。挺久的了，记不清了。平时手淫三四次。早晨或夜间没有正常勃起。晨勃、性生活开始、性生活过程中阴茎勃起硬度为黄瓜。性生活中间停下来不动会疲软。与伴侣间感情关系一般</p>
+                          <p className="font-medium mt-3 mb-1 text-purple-800">用药情况: 否认历史用药</p>
+                        </div>
+                      )}
+                    </motion.div>
                   </div>
                 </div>
-                {message.role === 'user' && (
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold ml-3 mt-1">您</div>
+              </div>
+              <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gradient-to-b from-blue-50/30 via-indigo-50/30 to-purple-50/30" ref={aiMessagesEndRef}>
+                {aiMessages.map((message, index) => (
+                  <motion.div 
+                    key={index} 
+                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    {message.role !== 'user' && (
+                       <motion.div 
+                         initial={{ scale: 0 }}
+                         animate={{ scale: 1 }}
+                         transition={{ delay: 0.2 }}
+                         className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 mt-1 shadow-lg"
+                       >
+                         <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={32} height={32} className="" />
+                       </motion.div>
+                     )}
+                    <motion.div 
+                      className={`max-w-[75%] p-4 rounded-2xl backdrop-blur-sm ${message.role === 'user' ? 'bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 text-white rounded-tr-none shadow-lg' : 'bg-white/90 text-gray-800 rounded-tl-none shadow-lg border border-blue-100/50'} `}
+                    >
+                      <div className="prose prose-sm max-w-none">
+                        {message.content.split('\n').map((line, i) => (
+                          <p key={i} className="mb-2 last:mb-0 leading-relaxed">{line}</p>
+                        ))}
+                      </div>
+                    </motion.div>
+                    {message.role === 'user' && (
+                      <motion.div 
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.2 }}
+                        className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-center text-white font-bold ml-3 mt-1 shadow-lg"
+                      >
+                        您
+                      </motion.div>
+                    )}
+                  </motion.div>
+                ))}
+                {isAiLoading && (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex justify-start"
+                  >
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 mt-1 shadow-lg">
+                       <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={32} height={32} className="" />
+                     </div>
+                    <div className="bg-white/90 text-gray-800 p-4 rounded-2xl rounded-tl-none shadow-lg border border-blue-100/50 backdrop-blur-sm">
+                      <div className="flex space-x-2">
+                        <motion.div 
+                          animate={{ y: [-2, 2, -2] }}
+                          transition={{ repeat: Infinity, duration: 0.6 }}
+                          className="w-2 h-2 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
+                        ></motion.div>
+                        <motion.div 
+                          animate={{ y: [-2, 2, -2] }}
+                          transition={{ repeat: Infinity, duration: 0.6, delay: 0.2 }}
+                          className="w-2 h-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                        ></motion.div>
+                        <motion.div 
+                          animate={{ y: [-2, 2, -2] }}
+                          transition={{ repeat: Infinity, duration: 0.6, delay: 0.4 }}
+                          className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"
+                        ></motion.div>
+                      </div>
+                    </div>
+                  </motion.div>
                 )}
               </div>
-            ))}
-            {isAiLoading && (
-              <div className="flex justify-start">
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold mr-3 mt-1">AI</div>
-                <div className="bg-white text-gray-800 p-4 rounded-2xl rounded-tl-none shadow-md border border-blue-100">
-                  <div className="flex space-x-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></div>
-                  </div>
+              <div className="bg-gradient-to-r from-white via-blue-50 to-indigo-50 border-t border-blue-200 p-6">
+                <div className="flex space-x-4">
+                  <Input
+                    size="large"
+                    placeholder="请输入您的问题..."
+                    value={aiInput}
+                    onChange={(e) => setAiInput(e.target.value)}
+                    onPressEnter={() => {
+                      if (!isAiLoading) {
+                        handleAiSubmit(aiCases[currentAiCase].api, aiInput);
+                        setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
+                        setAiInput("");
+                      }
+                    }}
+                    style={{
+                      flex: 1,
+                      borderRadius: '24px',
+                      height: '48px',
+                      paddingLeft: '24px',
+                      paddingRight: '24px',
+                      borderColor: '#93c5fd',
+                      borderWidth: '2px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                    }}
+                  />
+                  <Button
+                    type="primary"
+                    size="large"
+                    loading={isAiLoading}
+                    onClick={() => {
+                      handleAiSubmit(aiCases[currentAiCase].api, aiInput);
+                      setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
+                      setAiInput("");
+                    }}
+                    style={{
+                      background: 'linear-gradient(to right, #2563eb, #4f46e5, #7c3aed)',
+                      borderColor: 'transparent',
+                      borderRadius: '24px',
+                      height: '48px',
+                      paddingLeft: '32px',
+                      paddingRight: '32px',
+                      fontWeight: '500'
+                    }}
+                    icon={<Send size={18} />}
+                  >
+                    发送
+                  </Button>
                 </div>
               </div>
-            )}
+            </motion.div>
           </div>
-          <div className="p-5 bg-white border-t border-blue-100">
-            <div className="flex space-x-3">
-              <input
-                type="text"
-                className="flex-1 border border-blue-300 rounded-full p-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
-                placeholder="请输入您的问题..."
-                value={aiInput}
-                onChange={(e) => setAiInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !isAiLoading) {
-                    handleAiSubmit(aiCases[currentAiCase].api, aiInput);
-                    setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
-                    setAiInput("");
-                  }
-                }}
-              />
-              <button
-                className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-4 rounded-full hover:from-blue-700 hover:to-indigo-800 disabled:opacity-50 shadow-md transition-all duration-200 flex items-center font-medium"
-                disabled={isAiLoading}
-                onClick={() => {
-                  handleAiSubmit(aiCases[currentAiCase].api, aiInput);
-                  setAiMessages(prev => [...prev, { role: 'user', content: aiInput }]);
-                  setAiInput("");
-                }}
-              >
-                <Send size={18} className="mr-2" />
-                发送
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        )}
+      </AnimatePresence>
 
       {/* 页脚 */}
       <footer className="bg-gray-950 text-white py-12">

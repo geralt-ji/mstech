@@ -2,6 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
+import AntdConfig from "./antd-config"
 
 export const metadata = {
   title: "MSTECH - 科技创新，引领未来",
@@ -21,7 +22,9 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
+          <AntdConfig>
+            {children}
+          </AntdConfig>
           <Toaster />
         </ThemeProvider>
       </body>
