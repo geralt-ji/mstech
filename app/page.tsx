@@ -631,7 +631,7 @@ export default function Home() {
               >
                 <div className="relative h-60 overflow-hidden">
                   <Image
-                    src={item.image || "/placeholder.svg"}
+                    src={item.image || getImagePath("/placeholder.svg")}
                     alt={item.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -700,7 +700,7 @@ export default function Home() {
                 <div className="p-6 h-full flex flex-col">
                   <div className="flex justify-center mb-4">
                     <Image 
-                      src={index === 0 ? "/ai-urology-doctor.svg" : index === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} 
+                      src={index === 0 ? getImagePath("/ai-urology-doctor.svg") : index === 1 ? getImagePath("/adam-medical-assistant.svg") : getImagePath("/whi-medical-assistant.svg")} 
                       alt={`${item.title}图标`} 
                       width={80} 
                       height={80} 
@@ -943,7 +943,7 @@ export default function Home() {
                      transition={{ delay: 0.2, type: "spring" }}
                      className="flex-shrink-0 w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-lg"
                    >
-                     <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={40} height={40} className="" />
+                     <Image src={currentAiCase === 0 ? getImagePath("/ai-urology-doctor.svg") : currentAiCase === 1 ? getImagePath("/adam-medical-assistant.svg") : getImagePath("/whi-medical-assistant.svg")} alt="AI" width={40} height={40} className="" />
                    </motion.div>
                   <div className="flex-1">
                     <motion.p 
@@ -1032,7 +1032,7 @@ export default function Home() {
                     className="flex justify-start"
                   >
                     <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white flex items-center justify-center mr-3 mt-1 shadow-lg">
-                       <Image src={currentAiCase === 0 ? "/ai-urology-doctor.svg" : currentAiCase === 1 ? "/adam-medical-assistant.svg" : "/whi-medical-assistant.svg"} alt="AI" width={32} height={32} className="" />
+                       <Image src={currentAiCase === 0 ? getImagePath("/ai-urology-doctor.svg") : currentAiCase === 1 ? getImagePath("/adam-medical-assistant.svg") : getImagePath("/whi-medical-assistant.svg")} alt="AI" width={32} height={32} className="" />
                      </div>
                     <div className="bg-white/90 text-gray-800 p-4 rounded-2xl rounded-tl-none shadow-lg border border-blue-100/50 backdrop-blur-sm">
                       <div className="flex space-x-2">
