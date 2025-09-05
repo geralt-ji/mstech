@@ -699,9 +699,9 @@ export default function Home() {
                 whileHover={{ 
                   y: -10, 
                   scale: 1.02,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.15)"
+                  boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+                  transition: { duration: 0.15, ease: "easeOut" }
                 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
                 className="bg-white rounded-lg overflow-hidden shadow-lg group cursor-pointer transform transition-all duration-150 hover:shadow-2xl"
               >
                 <div className="p-6 h-full flex flex-col">
